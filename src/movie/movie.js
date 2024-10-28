@@ -41,6 +41,10 @@ function MovieList() {
         setLatestMovie(latesMovieGenres);
         
 
+        // tv 프로그램 가져오기
+        const tvProgram = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=5bcbe438deafd116de4c935da4564925`)
+        const tvProgramData = await tvProgram.json();
+        setTVProgram(tvProgramData.results);
         
       } catch (error) {
         console.error("Error fetching movies and genres:", error);
@@ -86,6 +90,20 @@ function MovieList() {
                     </div>
                 ))}
         </div>
+
+        <div className='movie-list'>
+        <h1>인기 TV 프로그램</h1>
+        {tvProgram.map(tvShow => (
+          <div key={tvShow.id} className='movie-card'>
+            <img src={"https://image.tmdb.org/t/p/w200" + tvShow.poster_path} alt={tvShow.name} />
+            <h2>{tvShow.name}</h2>
+            <p>{tvShow.overview}</p>
+            <p>평점 : {tvShow.vote_average}</p>
+            <p>첫 방영일 : {tvShow.first_air_date}</p>
+          </div>
+        ))}
+        </div>
+
     </div>
   );
 }
