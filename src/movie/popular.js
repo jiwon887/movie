@@ -48,9 +48,9 @@ function Popular() {
     if (!isGridView) {
       loadMovies(tablePage, false);
     }
-  }, [tablePage]);
+  }, [tablePage, isGridView]); 
 
-  // 스크롤 이벤트 처리 (Grid View 전용)
+  // 스크롤 이벤트 처리
   const handleScroll = () => {
     if (isGridView && !loading && gridPage < totalPages) {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
@@ -68,19 +68,20 @@ function Popular() {
 
   // 뷰 타입 전환
   const handleViewChange = () => {
-    setIsGridView(prev => !prev); // 뷰 타입 전환
+    setIsGridView(prev => !prev);
+    if (!isGridView && tablePage === 1) loadMovies(1, false); // tableView로 전환 시 첫 페이지 로드
   };
 
   // Table View 페이지네이션 버튼 핸들러
   const handleNextPage = () => {
     if (tablePage < totalPages) {
-      setTablePage(prevPage => prevPage + 1); // Table View에서 다음 페이지로 이동
+      setTablePage(prevPage => prevPage + 1);
     }
   };
 
   const handlePrevPage = () => {
     if (tablePage > 1) {
-      setTablePage(prevPage => prevPage - 1); // Table View에서 이전 페이지로 이동
+      setTablePage(prevPage => prevPage - 1);
     }
   };
 
@@ -117,7 +118,7 @@ function Popular() {
               </tr>
             </thead>
             <tbody>
-              {tableMovies.slice(0, 4).map(movie => ( // 4행까지만 표시
+              {tableMovies.slice(0, 4).map(movie => (
                 <tr key={movie.id}>
                   <td>
                     <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
@@ -132,7 +133,7 @@ function Popular() {
 
           <div className="pagination">
             <button onClick={handlePrevPage} disabled={tablePage === 1}>이전 페이지</button>
-            <span>현재 페이지: {tablePage}</span>
+            <span>현재 페이지: {tablePage} / {totalPages}</span>
             <button onClick={handleNextPage} disabled={tablePage === totalPages}>다음 페이지</button>
           </div>
         </div>
