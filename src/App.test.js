@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';  // 경로가 맞는지 확인
+import App from './App';  // 경로가 맞는지 확인하세요
 
-test('renders learn react link', () => {
+test('renders popular movies header', () => {
   render(<App />);
-  // "learn react" 대신 실제 화면에 있는 텍스트로 수정
-  const linkElement = screen.getByText(/인기 영화/i);  // 예: 실제 렌더링된 내용으로 변경
-  expect(linkElement).toBeInTheDocument();
+  // 여기에서 '인기 영화'라는 텍스트로 변경
+  const headerElement = screen.getByText(/인기 영화/i);  // 실제 화면에 있는 텍스트로 수정
+  expect(headerElement).toBeInTheDocument();
 });
