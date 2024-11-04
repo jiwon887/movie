@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: npm install  # 필요 시 의존성 설치
 
+      - name: Set CI environment variable
+        run: echo "CI=false" >> $GITHUB_ENV 
+
       - name: Build project
         run: npm run build  # 필요 시 프로젝트 빌드
 
