@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 
-import MovieList from './movie/movie';
-import Popular from './movie/popular';
+import MovieList from './movie';
+import Popular from './popular';
 
 
 function WishList() {
@@ -18,7 +18,7 @@ function Search() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <div>
         <Nav className='navbar' activeKey="/">
           <Nav.Item className='nav-item'>
@@ -41,7 +41,7 @@ function App() {
           <Route path='/search' element={<Search />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
