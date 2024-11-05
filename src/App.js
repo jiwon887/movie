@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 
-import MovieList from './movie/movie';
-import Popular from './movie/popular';
+import MovieList from './movie';
+import Popular from './popular';
 
 
 function WishList() {
