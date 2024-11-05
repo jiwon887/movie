@@ -15,7 +15,8 @@ function Login({ setIsLoggedIn }) {
         const storedPassword = localStorage.getItem("savedPassword");
 
         if (loginID === storedID && loginPassword === storedPassword) {
-            setIsLoggedIn(true);
+            localStorage.setItem("isLogin", true);
+            //setIsLoggedIn(true);
             navigate("/");
         } else {
             alert("Invalid ID or Password");

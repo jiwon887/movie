@@ -18,17 +18,12 @@ function Search() {
 }
 
 function App() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkLoginStatus = () => {
-    const loginID = localStorage.getItem("savedID");
-    const loginPassword = localStorage.getItem("savedPassword");
-    
-    if (loginID && loginPassword) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    const isLogin = localStorage.getItem("isLogin") === "true";
+    setIsLoggedIn(isLogin);
   };
 
   useEffect(() => {
