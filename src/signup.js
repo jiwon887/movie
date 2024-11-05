@@ -4,15 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 function Signup() {
     let [signupID, setSignupID] = useState("");
     let [signupPassword, setSignupPassword] = useState("");
-    let [signupEmail, setSignupEmail] = useState("");
     
     let navigate = useNavigate(); 
 
     const handleSignup = () => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(signupID)) {
+            alert("Please enter a valid email address.");
+            return; 
+        }
 
         localStorage.setItem("savedID", signupID);
         localStorage.setItem("savedPassword", signupPassword);
-        localStorage.setItem("loginEmail", signupEmail);
 
         navigate("/login");
     };
@@ -25,9 +29,6 @@ function Signup() {
             </div>
             <div>
                 Password: <input type="password" size={20} onChange={(e) => setSignupPassword(e.target.value)} />
-            </div>
-            <div>
-                Email: <input type="email" size={20} onChange={(e) => setSignupEmail(e.target.value)} />
             </div>
             <div>
                 <button onClick={handleSignup}>Sign Up</button>
