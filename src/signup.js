@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 function Signup() {
     let [signupID, setSignupID] = useState("");
     let [signupPassword, setSignupPassword] = useState("");
-    
+    let [passwordCheck, setPasswordCheck] = useState("");
+
     let navigate = useNavigate(); 
+
 
     const handleSignup = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -13,6 +15,11 @@ function Signup() {
         if (!emailPattern.test(signupID)) {
             alert("Please enter a valid email address.");
             return; 
+        }
+
+        if (signupPassword !== passwordCheck) {
+            alert("Passwords do not match.");
+            return;
         }
 
         localStorage.setItem("savedID", signupID);
@@ -29,6 +36,9 @@ function Signup() {
             </div>
             <div>
                 Password: <input type="password" size={20} onChange={(e) => setSignupPassword(e.target.value)} />
+            </div>
+            <div>
+                Password Check: <input type="password" size={20} onChange={(e) => setPasswordCheck(e.target.value)} />
             </div>
             <div>
                 <button onClick={handleSignup}>Sign Up</button>
