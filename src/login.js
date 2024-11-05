@@ -1,14 +1,26 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setIsLoggedIn }) {
     let [loginID, setID] = useState("");
     let [loginPassword, setPassword] = useState("");
     let [savedID, setSavedID] = useState("");
     let [savedPassword, setSavedPassword] = useState("");
+    let navigate = useNavigate();
 
     let localStorage = window.localStorage;
 
+    const handleLogin = () => {
+        const storedID = localStorage.getItem("savedID");
+        const storedPassword = localStorage.getItem("savedPassword");
+
+        if (loginID === storedID && loginPassword === storedPassword) {
+            setIsLoggedIn(true);
+            navigate("/");
+        } else {
+            alert("Invalid ID or Password");
+        }
+    };
     return (
         <>
             <div>
@@ -23,19 +35,15 @@ function Login() {
             </div>
 
             <div>
-                <button onClick={() => {
-                    localStorage.setItem("loginID", loginID);
-                    localStorage.setItem("loginPassword", loginPassword);
-
-                    setSavedID(localStorage.getItem("loginID"));
-                    setSavedPassword(localStorage.getItem("loginPassword"));
-                }}>
+                <button onClick={handleLogin}>
                     Login
                 </button>
             </div>
 
             <div>
-                <Link to="/signup">
+                <Link to="/signup" onChange={(e)=>{
+
+                }}>
                     <button>
                         Sign Up
                     </button>
