@@ -6,6 +6,11 @@ function Login({ setIsLoggedIn }) {
     let [loginPassword, setPassword] = useState("");
     let [savedID, setSavedID] = useState("");
     let [savedPassword, setSavedPassword] = useState("");
+    // rememberme로 저장 시 사용할 usestate
+    let [rememberID, setRememverID] = useState("");
+    let [rememberPassword, setRememverPassword] = useState("");
+    let [termAgree, setTermAgree] = useState("false");
+
     let navigate = useNavigate();
 
     let localStorage = window.localStorage;
@@ -15,13 +20,20 @@ function Login({ setIsLoggedIn }) {
         const storedPassword = localStorage.getItem("savedPassword");
 
         if (loginID === storedID && loginPassword === storedPassword) {
-            localStorage.setItem("isLogin", true);
-            setIsLoggedIn(true);
-            navigate("/");
+            if(termAgree === "true"){
+                localStorage.setItem("isLogin", true);
+                setIsLoggedIn(true);
+                navigate("/");
+            } else{
+                alert("약관 동의 체크해주세요");
+            }
         } else {
             alert("Invalid ID or Password");
         }
     };
+
+
+
     return (
         <>
             <div>
@@ -38,6 +50,16 @@ function Login({ setIsLoggedIn }) {
             <div>
                 <button onClick={handleLogin}>
                     Login
+                </button>
+            </div>
+            <div>
+                <button>
+                    rememberme
+                </button>
+                <button onClick={(e)=>{
+                    setTermAgree("true");
+                }}>
+                    약관 동의
                 </button>
             </div>
 
