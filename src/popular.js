@@ -8,12 +8,13 @@ function Popular() {
   const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
   const [isGridView, setIsGridView] = useState(true); // 그리드 뷰 여부
   const [loading, setLoading] = useState(false); // 로딩 상태
+  const apiKey = window.localStorage.getItem("savedPassword");
 
   // 영화 데이터 가져오기
   const fetchMovies = async (page) => {
     try {
       setLoading(true);
-      const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=5bcbe438deafd116de4c935da4564925&page=${page}`);
+      const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${page}`);
       const data = await response.json();
       return data;
     } catch (error) {

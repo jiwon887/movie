@@ -35,10 +35,10 @@ function Signup() {
                 ID: <input type="text" size={20} onChange={(e) => setSignupID(e.target.value)} />
             </div>
             <div>
-                Password: <input type="password" size={20} onChange={(e) => setSignupPassword(e.target.value)} />
+                Password: <input type="password" size={30} onChange={(e) => setSignupPassword(e.target.value)} />
             </div>
             <div>
-                Password Check: <input type="password" size={20} onChange={(e) => setPasswordCheck(e.target.value)} />
+                Password Check: <input type="password" size={30} onChange={(e) => setPasswordCheck(e.target.value)} />
             </div>
             <div>
                 <button onClick={handleSignup}>Sign Up</button>

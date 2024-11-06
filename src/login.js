@@ -30,7 +30,7 @@ function Login({ setIsLoggedIn }) {
                 }}/>
             </div>
             <div>
-                Password : <input type="password" size={20} onChange={(e) =>
+                Password : <input type="password" size={30} onChange={(e) =>
                     setPassword(e.target.value)
                 }/>
             </div>

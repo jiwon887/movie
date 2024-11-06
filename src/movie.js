@@ -6,20 +6,21 @@ function MovieList() {
   const [tvProgram, setTVProgram] = useState([]); // tv 프로그램 저장할 상태
   const [animation, setAnimation] = useState([]); // animation 저장할 상태
   const [genres, setGenres] = useState([]); // 장르 전역 변수로 사용
+  const apiKey = window.localStorage.getItem("savedPassword");
 
   // 인기영화, tv프로그램, 최신영화, 애니매이션
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         // 장르 정보 가져오기
-        const genreResponse = await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=5bcbe438deafd116de4c935da4564925');
+        const genreResponse = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
         const genreData = await genreResponse.json();
         const genres = genreData.genres;
 
       
 
         // 인기 영화 가져오기
-        const movies= await fetch('https://api.themoviedb.org/3/movie/popular?api_key=5bcbe438deafd116de4c935da4564925');
+        const movies= await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
         const movieData = await movies.json();
         // 영화 데이터에 장르 이름을 매핑
         const moviesGenres = movieData.results.map(movie => {
@@ -36,7 +37,7 @@ function MovieList() {
 
 
         // 최신 영화 가져오기
-        const latesMovie = await fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=5bcbe438deafd116de4c935da4564925');
+        const latesMovie = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`);
         const latesMovieData = await latesMovie.json();
         const latesMovieGenres = latesMovieData.results.map(movie=>({ ...movie, 
             genres: movie.genre_ids.map(id=> genres.find(g=>g.id === id)?.name || "Unknown")}));
@@ -44,13 +45,13 @@ function MovieList() {
         
 
         // tv 프로그램 가져오기
-        const tvProgram = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=5bcbe438deafd116de4c935da4564925`)
+        const tvProgram = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}`)
         const tvProgramData = await tvProgram.json();
         setTVProgram(tvProgramData.results);
         
         
         // 애니메이션 가져오기
-        const animation = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=5bcbe438deafd116de4c935da4564925&with_genres=16'); // 16은 애니메이션 장르 ID
+        const animation = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=16`); // 16은 애니메이션 장르 ID
         const animationData = await animation.json();
         const animationGenres = animationData.results.map(movie => ({...movie,
             genres: movie.genre_ids.map(id => genres.find(g => g.id === id)?.name || "Unknown")
