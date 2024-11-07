@@ -8,7 +8,9 @@ function Popular() {
   const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
   const [isGridView, setIsGridView] = useState(true); // 그리드 뷰 여부
   const [loading, setLoading] = useState(false); // 로딩 상태
+  const [wishlist, setWishlist] = useState([]); // 위시리스트 반영
   const apiKey = window.localStorage.getItem("savedPassword");
+  const userID = window.localStorage.getItem("savedID");
 
   // 영화 데이터 가져오기
   const fetchMovies = async (page) => {
@@ -86,6 +88,30 @@ function Popular() {
     }
   };
 
+  // 위시리스트 상태 로드
+  useEffect(() => {
+    const savedWishlist = JSON.parse(localStorage.getItem(`wishlist_${userID}`)) || [];
+    setWishlist(savedWishlist);
+  }, [userID]);
+
+ // 위시리스트 추가하기
+  const addWishlist = (movie) => {
+    let userWishlist = JSON.parse(localStorage.getItem(`wishlist_${userID}`)) || [];
+    const movieIndex = userWishlist.findIndex(item => item.id === movie.id);
+  
+    if (movieIndex !== -1) {
+      userWishlist.splice(movieIndex, 1);
+      alert("remove wishlist.");
+    } else {
+      userWishlist.push(movie);
+      alert("add wishlist.");
+    }
+
+    setWishlist(userWishlist);
+    localStorage.setItem(`wishlist_${userID}`, JSON.stringify(userWishlist));
+  };
+  
+
   return (
     <div>
       <h1>대세 콘텐츠</h1>
@@ -100,6 +126,11 @@ function Popular() {
               <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
               <h2>{movie.title}</h2>
               <p>평점: {movie.vote_average}</p>
+              <button onClick={() => addWishlist(movie)}>
+                          {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
+                          ? "Remove from Wishlist"
+                          : "Add to Wishlist"}
+              </button>
               <button className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                     ↑ 맨 위로
               </button>
@@ -127,6 +158,11 @@ function Popular() {
                   <td className="movie-title">{movie.title}</td>
                   <td className="movie-rating">{movie.vote_average}</td>
                   <td>{movie.release_date}</td>
+                  <button onClick={() => addWishlist(movie)}>
+                          {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
+                          ? "Remove from Wishlist"
+                          : "Add to Wishlist"}
+                 </button>
                 </tr>
               ))}
             </tbody>
