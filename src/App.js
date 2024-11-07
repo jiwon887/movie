@@ -9,10 +9,8 @@ import Popular from './popular';
 import Login from './login';
 import Signup from './signup';
 import WishList from './wishlist';
+import Search from './search';
 
-function Search() {
-  return null; // Search 컴포넌트 구현 필요
-}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
