@@ -97,11 +97,18 @@ body {
 /* 네비게이션 바 스타일 */
 .navbar {
   display: flex;
-  justify-content: space-around; /* 요소 간격 균일하게 배치 */
-  align-items: center; /* 아이템 수직 정렬 */
+  justify-content: space-between;; 
+  align-items: center; 
   padding: 15px 20px; /* 상하좌우 여백 조정 */
   background-color: #1e1e1e; /* 네비게이션 바 배경색 */
   border-bottom: 2px solid #61dafb; /* 하단 테두리 */
+}
+
+.logo-img {
+  width: 50px; /* 원하는 크기로 조정 */
+  height: 50px; /* 가로, 세로 크기를 같게 설정하여 원형으로 만듬 */
+  border-radius: 50%; /* 원형으로 만들기 위한 설정 */
+  object-fit: cover; /* 이미지를 원 안에 맞추기 위한 설정 */
 }
 
 .nav-item {
@@ -121,6 +128,17 @@ body {
   color: #61dafb; /* 호버 시 글씨 색 */
 }
 
+/* 모바일에서 네비게이션 바 스타일 */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .nav-item {
+    margin: 0 5px; /* 모바일에서 아이템 간격 좁힘 */
+    padding: 8px 12px; /* 모바일에서 아이템 패딩 줄임 */
+  }
+}
 
 /*hover event css*/
 .movie-card img {

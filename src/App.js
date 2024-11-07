@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
+import homelog from './homelog.png'; 
 
 import MovieList from './movie';
 import Popular from './popular';
@@ -43,6 +44,9 @@ function App() {
     <Router>
       <div>
         <Nav className='navbar' activeKey="/">
+          <Link to="/" className="logo">
+            <img src={homelog} alt="Nav logo" className='logo-img'/>
+          </Link>
           <Nav.Item className='nav-item'>
             <Nav.Link as={Link} to="/">Home</Nav.Link>
           </Nav.Item>
