@@ -5,6 +5,7 @@ function Signup() {
     let [signupID, setSignupID] = useState("");
     let [signupPassword, setSignupPassword] = useState("");
     let [passwordCheck, setPasswordCheck] = useState("");
+    let [termAgree, setTermAgree] = useState(false);
 
     let navigate = useNavigate(); 
 
@@ -19,6 +20,11 @@ function Signup() {
 
         if (signupPassword !== passwordCheck) {
             alert("Passwords do not match.");
+            return;
+        }
+
+        if (termAgree !== true){
+            alert("check term agree");
             return;
         }
 
@@ -43,6 +49,12 @@ function Signup() {
             <div>
                 <button onClick={handleSignup}>Sign Up</button>
             </div>
+            <button onClick={(e)=>{
+                    setTermAgree(!termAgree);
+                    localStorage.setItem("rememberme",rememberMe);
+                }}>
+                    약관 동의
+                </button>
             <div>
                 <Link to="/login">
                     <button>Back to Login</button>
