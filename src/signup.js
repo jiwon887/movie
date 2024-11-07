@@ -51,7 +51,6 @@ function Signup() {
             </div>
             <button onClick={(e)=>{
                     setTermAgree(!termAgree);
-                    localStorage.setItem("rememberme",rememberMe);
                 }}>
                     약관 동의
                 </button>
