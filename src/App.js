@@ -4,12 +4,12 @@ import { HashRouter as Router, Routes, Route, Link, Navigate } from "react-route
 import Nav from 'react-bootstrap/Nav';
 import homelog from './homelog.png'; 
 
-import MovieList from './movie';
-import Popular from './popular';
-import Login from './login';
-import Signup from './signup';
-import WishList from './wishlist';
-import Search from './search';
+import MovieList from './component/movie';
+import Popular from './component/popular';
+import Login from './component/login';
+import Signup from './component/signup';
+import WishList from './component/wishlist';
+import Search from './component/search';
 
 
 function App() {
