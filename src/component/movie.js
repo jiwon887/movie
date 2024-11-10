@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 function MovieList() {
   const [movies, setMovies] = useState([]); // 영화와 장르 정보를 저장할 상태
   const [latesMovie, setLatestMovie] = useState([]); // 최신 영화를 저장할 상태
-  const [tvProgram, setTVProgram] = useState([]); // tv 프로그램 저장할 상태
   const [animation, setAnimation] = useState([]); // animation 저장할 상태
   const [genres, setGenres] = useState([]); // 장르 전역 변수로 사용
   const [wishList, setWishList] = useState([]); // 위시리스트 반영
@@ -77,10 +76,8 @@ const addWishlist = (movie) => {
 
   if (movieIndex !== -1) {
     userWishlist.splice(movieIndex, 1);
-    alert("remove wishlist.");
   } else {
     userWishlist.push(movie);
-    alert("add wishlist.");
   }
 
   setWishList(userWishlist);
@@ -89,14 +86,14 @@ const addWishlist = (movie) => {
 
 
   return (
-    <div>
+    <div>            
+      <h1 className='section-title'>인기 영화</h1>
         <div className='movie-list'>
-            <h1>인기 영화</h1>
                 {movies.map(movie => (
                 <div key={movie.id} className='movie-card'>
                     <img src={"https://image.tmdb.org/t/p/w200" + movie.poster_path} alt={movie.title} />
                     <h2>{movie.title}</h2>
-                    <p>{movie.overview}</p>
+                    <p>{movie.overview.slice(0,100)}...</p>
                     <p>평점 : {movie.vote_average}</p>
                     <p>개봉일 : {movie.release_date}</p>
                     <ul>
@@ -104,7 +101,7 @@ const addWishlist = (movie) => {
                         <li key={index}>{genre}</li>
                         ))}
                     </ul>
-                    <button onClick={() => addWishlist(movie)}>
+                    <button className='wishlist-button' onClick={() => addWishlist(movie)}>
                           {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
                           ? "Remove from Wishlist"
                           : "Add to Wishlist"}
@@ -112,13 +109,13 @@ const addWishlist = (movie) => {
                 </div>
     ))}
         </div>
+      <h1 className='section-title'>최신 영화</h1>
         <div className='movie-list'>
-            <h1>최신 영화</h1>
                 {latesMovie.map(movie => (
                     <div key={movie.id} className='movie-card'>
                         <img src={"https://image.tmdb.org/t/p/w200" + movie.poster_path} alt={movie.title}/>
                         <h2>{movie.title}</h2>
-                        <p>{movie.overview}</p>
+                        <p>{movie.overview.slice(0,100)}...</p>
                         <p>평점 : {movie.vote_average}</p>
                         <p>개봉일 : {movie.release_date}</p>
                         <ul>
@@ -126,7 +123,7 @@ const addWishlist = (movie) => {
                             <li key={index}>{genre}</li>
                         ))}
                         </ul>
-                        <button onClick={() => addWishlist(movie)}>
+                        <button className='wishlist-button' onClick={() => addWishlist(movie)}>
                           {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
                           ? "Remove from Wishlist"
                           : "Add to Wishlist"}
@@ -135,17 +132,17 @@ const addWishlist = (movie) => {
                 ))}
 
         </div>
-
+      <h1 className='section-title'>애니메이션</h1>
         <div className='movie-list'>
-          <h1>애니메이션</h1>
+
             {animation.map(movie => (
               <div key={movie.id} className='movie-card'>
                 <img src={"https://image.tmdb.org/t/p/w200" + movie.poster_path} alt={movie.title} />
                 <h2>{movie.title}</h2>
-                <p>{movie.overview}</p>
+                <p>{movie.overview.slice(0,100)}...</p>
                 <p>평점 : {movie.vote_average}</p>
                 <p>개봉일 : {movie.release_date}</p>
-                <button onClick={() => addWishlist(movie)}>
+                <button className='wishlist-button' onClick={() => addWishlist(movie)}>
                           {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
                           ? "Remove from Wishlist"
                           : "Add to Wishlist"}

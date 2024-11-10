@@ -86,10 +86,8 @@ function WishList() {
 
     if (movieIndex !== -1) {
       userWishlist.splice(movieIndex, 1);
-      alert("Removed from wishlist.");
     } else {
       userWishlist.push(movie);
-      alert("Added to wishlist.");
     }
 
     setGridMovies(userWishlist);
@@ -98,19 +96,19 @@ function WishList() {
 
   return (
     <div>
-      <h1>My Wishlist</h1>
-      <button onClick={handleViewChange}>
+      <h1 align='center'>My Wishlist</h1>
+      <button className='view-selector' onClick={handleViewChange}>
         {isGridView ? '테이블 보기' : '그리드 보기'}
       </button>
 
       {isGridView ? (
         <div className="grid-view">
           {gridMovies.map(movie => (
-            <div key={movie.id} className="grid-item">
+            <div key={movie.id} className="movie-card">
               <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
               <h2>{movie.title}</h2>
               <p>평점: {movie.vote_average}</p>
-              <button onClick={() => toggleWishlist(movie)}>
+              <button className='wishlist-button' onClick={() => toggleWishlist(movie)}>
                 {gridMovies.some(item => item.id === movie.id) ? "Remove from Wishlist" : "Add to Wishlist"}
               </button>
             </div>
@@ -118,8 +116,8 @@ function WishList() {
           {loading && <p>Loading...</p>}
         </div>
       ) : (
-        <div>
-          <table className="table-view">
+        <div className='table-view'>
+          <table className='movie-card'>
             <thead>
               <tr>
                 <th>포스터</th>
@@ -137,7 +135,7 @@ function WishList() {
                   <td>{movie.title}</td>
                   <td>{movie.vote_average}</td>
                   <td>
-                    <button onClick={() => toggleWishlist(movie)}>
+                    <button className='wishlist-button' onClick={() => toggleWishlist(movie)}>
                       {gridMovies.some(item => item.id === movie.id) ? "Remove from Wishlist" : "Add to Wishlist"}
                     </button>
                   </td>

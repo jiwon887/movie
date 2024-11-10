@@ -77,6 +77,7 @@ const MovieList = () => {
 
   return (
     <div>
+      <div className='filters'>
       <label>
         장르:
         <select onChange={(e) => setSelectedGenre(Number(e.target.value))} value={selectedGenre || ''}>
@@ -118,10 +119,10 @@ const MovieList = () => {
           <option value="popularity.asc">인기 낮은 순</option>
         </select>
       </label>
-
-      <ul>
+      </div>
+    <div className='grid-view'>
         {movies.map((movie) => (
-          <li key={movie.id}>
+          <div className='movie-card  ' key={movie.id}>
             {movie.poster_path ?(
              <img
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
@@ -136,14 +137,13 @@ const MovieList = () => {
             <strong>장르:</strong> {getGenreNames(movie.genre_ids)}<br />
             <strong>개봉일:</strong> {movie.release_date}<br />
             <strong>평점:</strong> {movie.vote_average}
-          </li>
+          </div>
         ))}
-      </ul>
-
+    </div>
       <button className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         ↑ 맨 위로
       </button>
-    </div>
+  </div>
   );
 };
 

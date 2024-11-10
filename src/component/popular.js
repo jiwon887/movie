@@ -101,10 +101,8 @@ function Popular() {
   
     if (movieIndex !== -1) {
       userWishlist.splice(movieIndex, 1);
-      alert("remove wishlist.");
     } else {
       userWishlist.push(movie);
-      alert("add wishlist.");
     }
 
     setWishlist(userWishlist);
@@ -114,19 +112,19 @@ function Popular() {
 
   return (
     <div>
-      <h1>대세 콘텐츠</h1>
-      <button onClick={handleViewChange}>
+      <h1 align='center'>대세 콘텐츠</h1>
+      <button className='view-selector' onClick={handleViewChange}>
         {isGridView ? '테이블 보기' : '그리드 보기'}
       </button>
 
       {isGridView ? (
         <div className="grid-view">
           {gridMovies.map(movie => (
-            <div key={movie.id} className="grid-item">
+            <div key={movie.id} className="movie-card">
               <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
               <h2>{movie.title}</h2>
               <p>평점: {movie.vote_average}</p>
-              <button onClick={() => addWishlist(movie)}>
+              <button className='wishlist-button' onClick={() => addWishlist(movie)}>
                           {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
                           ? "Remove from Wishlist"
                           : "Add to Wishlist"}
@@ -139,34 +137,39 @@ function Popular() {
           {loading && <p>Loading...</p>}
         </div>
       ) : (
-        <div>
-          <table className="table-view">
-            <thead>
-              <tr>
-                <th>포스터</th>
-                <th className="movie-title">제목</th>
-                <th>평점</th>
-                <th>개봉일</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableMovies.slice(0, 4).map(movie => (
-                <tr key={movie.id}>
-                  <td>
-                    <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
-                  </td>
-                  <td className="movie-title">{movie.title}</td>
-                  <td className="movie-rating">{movie.vote_average}</td>
-                  <td>{movie.release_date}</td>
-                  <button onClick={() => addWishlist(movie)}>
+        <div className='table-view'>
+          <div>
+            <table className='movie-card'>
+              <thead>
+                <tr>
+                  <th>포스터</th>
+                  <th className="movie-title">제목</th>
+                  <th>평점</th>
+                  <th>개봉일</th>
+                  <th>위시리스트</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableMovies.slice(0, 4).map(movie => (
+                  <tr key={movie.id}>
+                    <td>
+                      <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
+                    </td>
+                    <td className="movie-title">{movie.title}</td>
+                    <td className="movie-rating">{movie.vote_average}</td>
+                    <td>{movie.release_date}</td>
+                    <td>
+                      <button className='wishlist-button' onClick={() => addWishlist(movie)}>
                           {JSON.parse(localStorage.getItem(`wishlist_${userID}`))?.some(item => item.id === movie.id)
                           ? "Remove from Wishlist"
                           : "Add to Wishlist"}
-                 </button>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                   </button>
+                   </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="pagination">
             <button onClick={handlePrevPage} disabled={tablePage === 1}>이전 페이지</button>
@@ -176,6 +179,8 @@ function Popular() {
         </div>
       )}
     </div>
+
+
   );
 }
 
