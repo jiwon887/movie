@@ -45,33 +45,70 @@ function Login({ setIsLoggedIn }) {
     }, []);
 
     return (
-        <>
-            <div>
-                ID : <input type="text" size={20} value={loginID} onChange={(e) => setID(e.target.value)} />
-            </div>
-            <div>
-                Password : <input type="password" size={30} value={loginPassword} onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <div>
-                <button onClick={handleLogin}>Login</button>
-            </div>
-            <div>
-                <label>
+        <div className="login-wrap">
+            <div className="login-html">
+                <div>
                     <input
-                        type="checkbox"
-                        checked={rememberMe}
-                        onChange={() => setRememberMe(!rememberMe)}
+                        id="tab-1"
+                        type="radio"
+                        name="tab"
+                        className="sign-in"
                     />
-                    Remember Me
-                </label>
+                    <label htmlFor="tab-1" className="tab">로그인</label>
+                    <input
+                        id="tab-2"
+                        type="radio"
+                        name="tab"
+                        className="sign-up"
+                    />
+                    <Link to="/signup" className="tab">회원가입</Link>
+                </div>
+                <div className="login-form">
+                    <div className="group">
+                    <label htmlFor="email" className="label">이메일</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            className="input"
+                            size={20} 
+                            value={loginID} 
+                            onChange={(e) => setID(e.target.value)} 
+                            required
+                        />
+                    </div>
+                    <div className="group">
+                        <label htmlFor="password" className="label">비밀번호</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="input"
+                            size={30}
+                            value={loginPassword}
+                            onChange={(e)=>setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="group">
+                        <label className="check-label"/>
+                            <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={()=>setRememberMe(!rememberMe)}
+                                className="check"
+                            />
+                            <span className="icon">로그인 저장</span>
+                    </div>
+                    <div className="group">
+                    <button
+                            type="button"
+                            className="button"
+                            onClick={handleLogin}
+                        >
+                            로그인
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div>
-                <Link to="/signup">
-                    <button>Sign Up</button>
-                </Link>
-            </div>
-        </>
-    );
+        /</div>
+);
 }
-
 export default Login;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
     let [signupID, setSignupID] = useState("");
@@ -15,7 +15,7 @@ function Signup() {
 
         if (!emailPattern.test(signupID)) {
             alert("Please enter a valid email address.");
-            return; 
+            return;
         }
 
         if (signupPassword !== passwordCheck) {
@@ -35,32 +35,87 @@ function Signup() {
     };
 
     return (
-        <>
-            <h2>Sign Up</h2>
-            <div>
-                ID: <input type="text" size={20} onChange={(e) => setSignupID(e.target.value)} />
+        <div className="login-wrap">
+            <div className="login-html">
+                <div>
+                    <input 
+                        id="tab-1" 
+                        type="radio" 
+                        name="tab" 
+                        className="sign-in" 
+                    />
+                    <Link to="/login" className="tab">로그인</Link>
+                    <input 
+                        id="tab-2" 
+                        type="radio" 
+                        name="tab" 
+                        className="sign-up"
+                    />
+                    <label htmlFor="tab-2" className="tab">회원가입</label>
+                </div>
+                <div className="login-form">
+                    <div className="group">
+                        <label htmlFor="email" className="label">이메일</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            className="input" 
+                            value={signupID} 
+                            onChange={(e) => setSignupID(e.target.value)} 
+                            required
+                        />
+                    </div>
+
+                    <div className="group">
+                        <label htmlFor="password" className="label">비밀번호</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            className="input" 
+                            value={signupPassword} 
+                            onChange={(e) => setSignupPassword(e.target.value)} 
+                            required
+                        />
+                    </div>
+
+                    <div className="group">
+                        <label htmlFor="passwordCheck" className="label">비밀번호 확인</label>
+                        <input 
+                            type="password" 
+                            id="passwordCheck" 
+                            className="input" 
+                            value={passwordCheck} 
+                            onChange={(e) => setPasswordCheck(e.target.value)} 
+                            required
+                        />
+                    </div>
+
+                    <div className="group">
+                        <label className="check-label">
+                            <input 
+                                type="checkbox" 
+                                checked={termAgree} 
+                                onChange={() => setTermAgree(!termAgree)} 
+                                className="check"
+                            />
+                            <span className="icon"></span> 약관동의
+                        </label>
+                    </div>
+
+                    <div className="group">
+                        <button 
+                            type="button" 
+                            className="button" 
+                            onClick={handleSignup}
+                        >
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div>
-                Password: <input type="password" size={30} onChange={(e) => setSignupPassword(e.target.value)} />
-            </div>
-            <div>
-                Password Check: <input type="password" size={30} onChange={(e) => setPasswordCheck(e.target.value)} />
-            </div>
-            <div>
-                <button onClick={handleSignup}>Sign Up</button>
-            </div>
-            <button onClick={(e)=>{
-                    setTermAgree(!termAgree);
-                }}>
-                    약관 동의
-                </button>
-            <div>
-                <Link to="/login">
-                    <button>Back to Login</button>
-                </Link>
-            </div>
-        </>
+        </div>
     );
 }
+
 
 export default Signup;
