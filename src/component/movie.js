@@ -14,14 +14,14 @@ function MovieList() {
         const fetchMovies = async () => {
       try {
         // 장르 정보 가져오기
-        const genreResponse = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
+        const genreResponse = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=ko`);
         const genreData = await genreResponse.json();
         const genres = genreData.genres;
 
       
 
         // 인기 영화 가져오기
-        const movies= await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
+        const movies= await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=ko`);
         const movieData = await movies.json();
         // 영화 데이터에 장르 이름을 매핑
         const moviesGenres = movieData.results.map(movie => {
@@ -38,7 +38,7 @@ function MovieList() {
 
 
         // 최신 영화 가져오기
-        const latesMovie = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`);
+        const latesMovie = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=ko`);
         const latesMovieData = await latesMovie.json();
         const latesMovieGenres = latesMovieData.results.map(movie=>({ ...movie, 
             genres: movie.genre_ids.map(id=> genres.find(g=>g.id === id)?.name || "Unknown")}));
@@ -46,7 +46,7 @@ function MovieList() {
               
         
         // 애니메이션 가져오기
-        const animation = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=16`); // 16은 애니메이션 장르 ID
+        const animation = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=16&language=ko`); // 16은 애니메이션 장르 ID
         const animationData = await animation.json();
         const animationGenres = animationData.results.map(movie => ({...movie,
             genres: movie.genre_ids.map(id => genres.find(g => g.id === id)?.name || "Unknown")

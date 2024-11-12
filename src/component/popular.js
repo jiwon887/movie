@@ -16,7 +16,7 @@ function Popular() {
   const fetchMovies = async (page) => {
     try {
       setLoading(true);
-      const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${page}`);
+      const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${page}&language=ko`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -56,12 +56,19 @@ function Popular() {
   // 스크롤 이벤트 처리
   const handleScroll = () => {
     if (isGridView && !loading && gridPage < totalPages) {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        setGridPage(prev => prev + 1); // 다음 페이지로 이동
+      // 현재 페이지가 마지막 페이지에 가까워졌을 때만 다음 페이지를 호출하도록 조건 추가
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const bodyHeight = document.body.offsetHeight;
+  
+      // 페이지 하단에 가까워지면 다음 페이지로 이동
+      if (scrollPosition >= bodyHeight - 200) {
+        // 이미 마지막 페이지에 도달했다면 로딩을 하지 않도록 함
+        if (gridPage < totalPages) {
+          setGridPage(prev => prev + 1); // 다음 페이지로 이동
+        }
       }
     }
   };
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -112,7 +119,7 @@ function Popular() {
 
   return (
     <div>
-      <h1 align='center'>대세 콘텐츠</h1>
+      <h1 className='section-title' align='center'>대세 콘텐츠</h1>
       <button className='view-selector' onClick={handleViewChange}>
         {isGridView ? '테이블 보기' : '그리드 보기'}
       </button>
@@ -134,7 +141,7 @@ function Popular() {
               </button>
             </div>
           ))}
-          {loading && <p>Loading...</p>}
+          {loading && <p className='loading-overlay'>Loading...</p>}
         </div>
       ) : (
         <div className='table-view'>

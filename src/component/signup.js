@@ -44,7 +44,7 @@ function Signup() {
                         name="tab" 
                         className="sign-in" 
                     />
-                    <Link to="/login" className="tab">로그인</Link>
+                    <Link to="/login" className="notab">로그인</Link>
                     <input 
                         id="tab-2" 
                         type="radio" 
@@ -90,7 +90,7 @@ function Signup() {
                         />
                     </div>
 
-                    <div className="group">
+                    <div>
                         <label className="check-label">
                             <input 
                                 type="checkbox" 

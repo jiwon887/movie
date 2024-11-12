@@ -96,7 +96,7 @@ function WishList() {
 
   return (
     <div>
-      <h1 align='center'>My Wishlist</h1>
+      <h1 className='section-title' align='center'>위시리스트</h1>
       <button className='view-selector' onClick={handleViewChange}>
         {isGridView ? '테이블 보기' : '그리드 보기'}
       </button>

@@ -77,6 +77,7 @@ const MovieList = () => {
 
   return (
     <div>
+      <h1 className='section-title' align='center'>검색</h1>
       <div className='filters'>
       <label>
         장르:
@@ -129,7 +130,7 @@ const MovieList = () => {
               alt={movie.title}
             />
             ) : (
-            <div style={{ width: "200px", height: "300px", backgroundColor: "#ddd", display: "flex", alignItems: "center", justifyContent: "center", color: "#555" }}>
+            <div style={{ width: "176px", height: "264px", backgroundColor: "#ddd", display: "flex", alignItems: "center", justifyContent: "center", color: "#555" }}>
               이미지 없음
             </div>
           )}

@@ -153,6 +153,21 @@ body {
   margin: 20px 0; /* 여백 추가 */
 }
 
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  z-index: 9999; /* 다른 요소 위에 표시되도록 */
+}
+
 
 /* tableview */
 .table-view {
@@ -357,11 +372,6 @@ body {
   color: #ffffff;
 }
 
-
-
-
-
-
 /* 더 작은 화면에서 필터와 카드 레이아웃 변경 */
 @media (max-width: 480px) {
   .filters {
@@ -390,7 +400,6 @@ body {
 body{
   margin:0;
   color:#6a6f8c;
-  background:#c8c8c8;
   font:600 16px/18px 'Open Sans',sans-serif;
 }
 *,:after,:before{box-sizing:border-box}
@@ -429,11 +438,7 @@ a{color:inherit;text-decoration:none}
 .login-form .group .check{
   display:none;
 }
-.login-html .tab,
-.login-form .group .label,
-.login-form .group .button{
-  text-transform:uppercase;
-}
+
 .login-html .tab{
   font-size:22px;
   margin-right:15px;
@@ -441,12 +446,19 @@ a{color:inherit;text-decoration:none}
   margin:0 15px 10px 0;
   display:inline-block;
   border-bottom:2px solid transparent;
-}
-.login-html .sign-in:checked + .tab,
-.login-html .sign-up:checked + .tab{
   color:#fff;
   border-color:#1161ee;
 }
+.login-html .notab{
+  font-size:22px;
+  margin-right:15px;
+  padding-bottom:5px;
+  margin:0 15px 10px 0;
+  display:inline-block;
+  border-bottom:2px solid transparent;
+}
+
+
 .login-form{
   min-height:345px;
   position:relative;
@@ -534,4 +546,48 @@ a{color:inherit;text-decoration:none}
 }
 .foot-lnk{
   text-align:center;
+}
+
+
+/* 애니메이션 효과 */
+
+.page {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide-left-enter {
+  z-index: 1;
+  transform: translateX(100%);
+}
+.slide-left-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms;
+}
+.slide-left-exit {
+  z-index: 0;
+  transform: translateX(0);
+}
+.slide-left-exit-active {
+  transform: translateX(-100%);
+  transition: transform 300ms;
+}
+
+
+.slide-right-enter {
+  z-index: 1;
+  transform: translateX(-100%);
+}
+.slide-right-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms;
+}
+.slide-right-exit {
+  z-index: 0;
+  transform: translateX(0);
+}
+.slide-right-exit-active {
+  transform: translateX(100%);
+  transition: transform 300ms;
 }

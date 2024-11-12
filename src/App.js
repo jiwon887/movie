@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Nav from 'react-bootstrap/Nav';
 import homelog from './homelog.png'; 
 
@@ -11,29 +12,67 @@ import Signup from './component/signup';
 import WishList from './component/wishlist';
 import Search from './component/search';
 
+const pageOrder = {
+  '/': 1,              // Home
+  '/wishlist': 2,      // WishList
+  '/popular': 3,        // Popular
+  '/search': 4,         // Search
+  '/login': 5,          // login
+  '/signup': 6          // signup
+};
+
+function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
+  const location = useLocation();
+  const [prevPath, setPrevPath] = useState(location.pathname);
+
+  // 이전 페이지와 현재 페이지 비교해 방향 결정
+  const currentOrder = pageOrder[location.pathname] || 0;
+  const prevOrder = pageOrder[prevPath] || 0;
+  const transitionClass = currentOrder > prevOrder ? 'slide-left' : 'slide-right';
+
+  useEffect(() => {
+    setPrevPath(location.pathname);
+  }, [location.pathname]);
+
+ return (
+    <TransitionGroup className="page">
+      <CSSTransition
+        key={location.key}
+        timeout={1000}
+        classNames={transitionClass}
+      >
+        <Routes location={location}>
+          <Route path='/' element={isLoggedIn ? <MovieList /> : <Navigate to="/login" />} />
+          <Route path='/wishlist' element={isLoggedIn ? <WishList /> : <Navigate to="/login" />} />
+          <Route path='/popular' element={isLoggedIn ? <Popular /> : <Navigate to="/login" />} />
+          <Route path='/search' element={isLoggedIn ? <Search /> : <Navigate to="/login" />} />
+          <Route path='/login' element={isLoggedIn ? <Navigate to="/login" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/signup' element={isLoggedIn ? <Navigate to="/login" /> : <Signup />} />
+        </Routes>
+      </CSSTransition>
+    </TransitionGroup>
+  );
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // 초기 로딩 상태 추가
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 로그인 상태 확인 함수
   const checkLoginStatus = () => {
     const isLogin = localStorage.getItem("isLogin") === "true";
     setIsLoggedIn(isLogin);
-    setIsLoading(false); // 로딩 완료 상태로 전환
+    setIsLoading(false);
   };
 
-  // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem("isLogin");
     setIsLoggedIn(false);
   };
 
   useEffect(() => {
-    checkLoginStatus(); // 초기 렌더링 시 로그인 상태 확인
+    checkLoginStatus();
   }, []);
 
-  // 로딩 중일 때 로딩 표시를 추가할 수도 있음
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -52,7 +91,7 @@ function App() {
             <Nav.Link as={Link} to="/wishlist">WishList</Nav.Link>
           </Nav.Item>
           <Nav.Item className='nav-item'>
-            <Nav.Link as={Link} to="/movie/popular">Popular</Nav.Link>
+            <Nav.Link as={Link} to="/popular">Popular</Nav.Link>
           </Nav.Item>
           <Nav.Item className='nav-item'>
             <Nav.Link as={Link} to="/search">Search</Nav.Link>
@@ -63,14 +102,7 @@ function App() {
             </Nav.Item>
           )}
         </Nav>
-        <Routes>
-          <Route path='/' element={isLoggedIn ? <MovieList /> : <Navigate to="/login" />} />
-          <Route path='/wishlist' element={isLoggedIn ? <WishList /> : <Navigate to="/login" />} />
-          <Route path='/movie/popular' element={isLoggedIn ? <Popular /> : <Navigate to="/login" />} />
-          <Route path='/search' element={isLoggedIn ? <Search /> : <Navigate to="/login" />} />
-          <Route path='/login' element={isLoggedIn ? <Navigate to="/" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path='/signup' element={isLoggedIn ? <Navigate to="/" /> : <Signup />} />
-        </Routes>
+        <AnimatedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </div>
     </Router>
   );

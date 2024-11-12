@@ -61,7 +61,7 @@ function Login({ setIsLoggedIn }) {
                         name="tab"
                         className="sign-up"
                     />
-                    <Link to="/signup" className="tab">회원가입</Link>
+                    <Link to="/signup" className="notab">회원가입</Link>
                 </div>
                 <div className="login-form">
                     <div className="group">
@@ -78,25 +78,24 @@ function Login({ setIsLoggedIn }) {
                     </div>
                     <div className="group">
                         <label htmlFor="password" className="label">비밀번호</label>
-                        <input
+                            <input
                             type="password"
                             id="password"
                             className="input"
                             size={30}
                             value={loginPassword}
                             onChange={(e)=>setPassword(e.target.value)}
-                        />
-                    </div>
-                    <div className="group">
-                        <label className="check-label"/>
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={()=>setRememberMe(!rememberMe)}
-                                className="check"
                             />
-                            <span className="icon">로그인 저장</span>
                     </div>
+                    <label className="check-label">
+                        <input
+                            type="checkbox"
+                            checked={rememberMe}
+                            onChange={()=>setRememberMe(!rememberMe)}
+                            class="check"
+                        />
+                        <span class="icon">로그인 저장</span>
+                    </label>
                     <div className="group">
                     <button
                             type="button"
