@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
 
 function Popular() {
   const [gridMovies, setGridMovies] = useState([]); // Grid View 영화 목록
@@ -9,6 +10,7 @@ function Popular() {
   const [isGridView, setIsGridView] = useState(true); // 그리드 뷰 여부
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [wishlist, setWishlist] = useState([]); // 위시리스트 반영
+  const observerRef = useRef(null);
   const apiKey = window.localStorage.getItem("savedPassword");
   const userID = window.localStorage.getItem("savedID");
 
@@ -44,7 +46,7 @@ function Popular() {
     if (isGridView) {
       loadMovies(gridPage, true);
     }
-  }, [gridPage]);
+  }, [gridPage, isGridView]);
 
   // Table View 페이지네이션
   useEffect(() => {
@@ -54,27 +56,33 @@ function Popular() {
   }, [tablePage, isGridView]); 
 
   // 스크롤 이벤트 처리
-  const handleScroll = () => {
-    if (isGridView && !loading && gridPage < totalPages) {
-      // 현재 페이지가 마지막 페이지에 가까워졌을 때만 다음 페이지를 호출하도록 조건 추가
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const bodyHeight = document.body.offsetHeight;
-  
-      // 페이지 하단에 가까워지면 다음 페이지로 이동
-      if (scrollPosition >= bodyHeight - 200) {
-        // 이미 마지막 페이지에 도달했다면 로딩을 하지 않도록 함
-        if (gridPage < totalPages) {
-          setGridPage(prev => prev + 1); // 다음 페이지로 이동
-        }
-      }
-    }
-  };
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    // 마지막 요소가 뷰포트에 들어왔는지 관찰
+    observerRef.current = new IntersectionObserver(entries => {
+      const lastEntry = entries[0];
+      if (lastEntry.isIntersecting && !loading && gridPage <= totalPages) {
+        setGridPage(prevPage => {
+        const nextPage = prevPage + 1;
+        return nextPage;
+      });
+      }
+    }, { threshold: 0 }); 
+
+    const observer = observerRef.current;
+    const target = document.querySelector("#loadMore");
+
+    // 타겟 요소를 관찰
+    if (target) {
+      observer.observe(target);
+    }
+
+    // 컴포넌트 언마운트 시 관찰 해제
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (target) {
+        observer.unobserve(target);
+      }
     };
-  }, [gridPage, loading, isGridView]);
+  }, [loading, gridPage, totalPages]);
 
   // 뷰 타입 전환
   const handleViewChange = () => {
@@ -142,6 +150,7 @@ function Popular() {
             </div>
           ))}
           {loading && <p className='loading-overlay'>Loading...</p>}
+          <div id="loadMore" style={{ height: "10px" }} />
         </div>
       ) : (
         <div className='table-view'>
