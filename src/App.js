@@ -11,14 +11,16 @@ import Login from './component/login';
 import Signup from './component/signup';
 import WishList from './component/wishlist';
 import Search from './component/search';
+import Filter from './component/filter'
 
 const pageOrder = {
   '/': 1,              // Home
   '/wishlist': 2,      // WishList
   '/popular': 3,        // Popular
   '/search': 4,         // Search
-  '/login': 5,          // login
-  '/signup': 6          // signup
+  '/filter': 5,         // filter
+  '/login': 6,          // login
+  '/signup': 7          // signup
 };
 
 function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
@@ -46,6 +48,7 @@ function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
           <Route path='/wishlist' element={isLoggedIn ? <WishList /> : <Navigate to="/login" />} />
           <Route path='/popular' element={isLoggedIn ? <Popular /> : <Navigate to="/login" />} />
           <Route path='/search' element={isLoggedIn ? <Search /> : <Navigate to="/login" />} />
+          <Route path='/filter' element={isLoggedIn? <Filter /> : <Navigate to="/login"/>} />
           <Route path='/login' element={isLoggedIn ? <Navigate to="/login" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path='/signup' element={isLoggedIn ? <Navigate to="/login" /> : <Signup />} />
         </Routes>
@@ -74,7 +77,7 @@ function App() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className='loading-overlay'>Loading...</div>;
   }
 
   return (
@@ -95,6 +98,9 @@ function App() {
           </Nav.Item>
           <Nav.Item className='nav-item'>
             <Nav.Link as={Link} to="/search">Search</Nav.Link>
+          </Nav.Item>
+          <Nav.Item className='nav-item'>
+            <Nav.Link as={Link} to="/filter">Filter</Nav.Link>
           </Nav.Item>
           {isLoggedIn && (
             <Nav.Item className='nav-item'>

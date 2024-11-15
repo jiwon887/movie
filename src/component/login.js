@@ -16,6 +16,7 @@ function Login({ setIsLoggedIn }) {
         if (loginID === storedID && loginPassword === storedPassword) {
             localStorage.setItem("isLogin", true);
             setIsLoggedIn(true);
+            sessionStorage.setItem("curUserID", loginID);
 
             // RememberMe 상태에 따라 로그인 정보를 저장하거나 삭제
             if (rememberMe) {
