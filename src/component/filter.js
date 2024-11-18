@@ -87,17 +87,17 @@ const MovieList = () => {
     <div>
       <h1 className='section-title' align='center'>검색</h1>
       <div className='filters'>
+        <text>장르</text>
         <label>
-          장르:
           <select onChange={(e) => setSelectedGenre(Number(e.target.value))} value={selectedGenre || ''}>
-            <option value="">모든 장르</option>
+            <option value=""></option>
             {genres.map((genre) => (
               <option key={genre.id} value={genre.id}>{genre.name}</option>
             ))}
           </select>
         </label>
+        <text>평점</text>
         <label>
-          최소 별점:
           <select onChange={(e) => setMinRating(Number(e.target.value))} value={minRating}>
             <option value={0}>모든 평점</option>
             <option value={5}>5</option>
@@ -106,8 +106,8 @@ const MovieList = () => {
             <option value={8}>8</option>
           </select>
         </label>
+        <text>연도</text>
         <label>
-          개봉 연도:
           <input
             type="number"
             value={releaseYear || ''}
@@ -117,8 +117,8 @@ const MovieList = () => {
             placeholder="2023"
           />
         </label>
+        <text>정렬</text>
         <label>
-          정렬:
           <select onChange={(e) => setSort(e.target.value)} value={sort}>
             <option value="release_date.desc">최신 개봉 순</option>
             <option value="release_date.asc">오래된 개봉 순</option>
