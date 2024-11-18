@@ -149,14 +149,16 @@ function Search() {
       <div className="grid-view">
         {movies.map((movie) => (
           <div key={movie.id} className="movie-card">
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                  : "https://via.placeholder.com/200x300"
-              }
-              alt={movie.title}
-            />
+            {movie.poster_path ?(
+              <img
+                src ={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={movie.title}
+              />
+              ) : (
+                <div className='image-placeholder'>
+                  이미지 없음
+                </div>
+              )}
             <h2>{movie.title}</h2>
             <p>평점: {movie.vote_average}</p>
             <p>개봉일: {movie.release_date}</p>

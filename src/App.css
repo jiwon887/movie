@@ -835,3 +835,23 @@ a{color:inherit;text-decoration:none}
     padding: 8px 10px; /* 여백 축소 */
   }
 }
+
+/* 기본 이미지 없음 스타일 */
+.image-placeholder {
+  width: 176px;
+  height: 264px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+
+/* 모바일 화면에서 크기 조정 */
+@media (max-width: 768px) {
+  .image-placeholder {
+    width: 100%; /* 부모 요소 크기에 맞춤 */
+    aspect-ratio: 2 / 3; /* 2:3 비율 유지 */
+    height: auto; /* 높이는 비율에 따라 자동 조정 */
+  }
+}

@@ -140,7 +140,7 @@ const MovieList = () => {
               alt={movie.title}
             />
             ) : (
-            <div style={{ width: "176px", height: "264px", backgroundColor: "#ddd", display: "flex", alignItems: "center", justifyContent: "center", color: "#555" }}>
+            <div className='image-placeholder'>
               이미지 없음
             </div>
           )}
