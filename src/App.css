@@ -262,6 +262,26 @@ body {
 .filters select, .filters input {
   font-size: 1em;
 }
+/* 초기화 버튼 */
+.filters .reset-button {
+  position: relative; /* 뷰 선택기 내부 오른쪽 아래에 고정 */
+  right: 10px; /* 오른쪽 여백 */
+  bottom: 10px; /* 아래쪽 여백 */
+  padding: 8px 12px;
+  background-color: #f0f0f0; /* 어울리는 중립 색상 */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* 초기화 버튼 호버 효과 */
+.view-selector .reset-button:hover {
+  background-color: #e0e0e0;
+  color: #000;
+}
 
 
 

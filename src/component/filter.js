@@ -75,51 +75,61 @@ const MovieList = () => {
       .join(', ');
   };
 
+  // 필터 초기화
+  const resetFilter = ()=>{
+    setSelectedGenre('')
+    setMinRating(0)
+    setReleaseYear(null)
+    setSort('release_date.desc')
+  }
+
   return (
     <div>
       <h1 className='section-title' align='center'>검색</h1>
       <div className='filters'>
-      <label>
-        장르:
-        <select onChange={(e) => setSelectedGenre(Number(e.target.value))} value={selectedGenre || ''}>
-          <option value="">모든 장르</option>
-          {genres.map((genre) => (
-            <option key={genre.id} value={genre.id}>{genre.name}</option>
-          ))}
-        </select>
-      </label>
-      <label>
-        최소 별점:
-        <select onChange={(e) => setMinRating(Number(e.target.value))} value={minRating}>
-          <option value={0}>모든 평점</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-        </select>
-      </label>
-      <label>
-        개봉 연도:
-        <input
-          type="number"
-          value={releaseYear || ''}
-          min="1980"
-          max="2024"
-          onChange={(e) => setReleaseYear(Number(e.target.value))}
-          placeholder="2023"
-        />
-      </label>
-      <label>
-        정렬:
-        <select onChange={(e) => setSort(e.target.value)} value={sort}>
-          <option value="release_date.desc">최신 개봉 순</option>
-          <option value="release_date.asc">오래된 개봉 순</option>
-          <option value="vote_average.desc">평점 높은 순</option>
-          <option value="vote_average.asc">평점 낮은 순</option>
-          <option value="popularity.desc">인기 높은 순</option>
-          <option value="popularity.asc">인기 낮은 순</option>
-        </select>
-      </label>
+        <label>
+          장르:
+          <select onChange={(e) => setSelectedGenre(Number(e.target.value))} value={selectedGenre || ''}>
+            <option value="">모든 장르</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>{genre.name}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          최소 별점:
+          <select onChange={(e) => setMinRating(Number(e.target.value))} value={minRating}>
+            <option value={0}>모든 평점</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+          </select>
+        </label>
+        <label>
+          개봉 연도:
+          <input
+            type="number"
+            value={releaseYear || ''}
+            min="1980"
+            max="2024"
+            onChange={(e) => setReleaseYear(Number(e.target.value))}
+            placeholder="2023"
+          />
+        </label>
+        <label>
+          정렬:
+          <select onChange={(e) => setSort(e.target.value)} value={sort}>
+            <option value="release_date.desc">최신 개봉 순</option>
+            <option value="release_date.asc">오래된 개봉 순</option>
+            <option value="vote_average.desc">평점 높은 순</option>
+            <option value="vote_average.asc">평점 낮은 순</option>
+            <option value="popularity.desc">인기 높은 순</option>
+            <option value="popularity.asc">인기 낮은 순</option>
+          </select>
+          
+        </label>
+        <button class='reset-button' onClick={resetFilter}>초기화</button>
       </div>
     <div className='grid-view'>
         {movies.map((movie) => (
