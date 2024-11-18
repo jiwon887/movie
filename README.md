@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+### 🎬 Movie Info App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+영화 검색 및 소개 기능을 제공하는 리액트 기반의 웹 애플리케이션입니다
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### 🚀 프로젝트 기본 정보
 
-### `npm start`
+- **프로젝트 이름**: Movie Info App
+- **설명**: 영화 및 TV 프로그램 정보를 검색하고 관리할 수 있는 웹 애플리케이션
+- **주요 기능**:
+  - 인기 영화 및 TV 프로그램 목록 제공
+  - 영화 검색 및 필터링
+  - 위시리스트 저장
+  - 사용자 로그인 및 회원가입 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🛠 기술 스택
 
-### `npm test`
+- **Frontend**: React.js, HTML, CSS
+- **State Management**: React Hooks (useState, useEffect)
+- **API**: [TMDB API](https://www.themoviedb.org/documentation/api)
+- **User Management**: LocalStorage, SessionStorage
+- **Routing**: React Router
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+### ⚙️ 설치 및 실행 가이드
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. 프로젝트 클론
+```bash
+git clone https://github.com/jiwon887/movie.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. 패키지 설치
+``` bash
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. 애플리케이션 실행
+npm start
 
-### `npm run eject`
+기본적으로 <http://localhost:3000>에서 실행됩니다
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 4. 회원가입
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+회원가입 시 비밀번호는 본인 **TMDB** API키로 사용해야합니다
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
+### 📂 프로젝트 구조
+```bash
+movie/
+├── public/          
+├── src/
+│   ├── components/       
+│   │   ├── Movie.js       # 기본 페이지
+│   │   ├── Popular.js     # 인기 영화 목록
+│   │   ├── Search.js      # 영화 검색
+│   │   ├── Filter.js      # 영화 필터링 찾기
+│   │   ├── Wishlist.js    # 즐겨찾기
+│   │   ├── Signup.js      # 회원가입 페이지
+│   │   └── Login.js       # 로그인 페이지
+│   ├── APP.css            # css 전체 모음     
+│   ├── utils/       
+│   ├── App.js             # 메인 컴포넌트 및 라우팅
+│   └── index.js
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
