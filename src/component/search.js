@@ -37,6 +37,7 @@ function Search() {
       setMovies([]); // 영화 데이터 초기화
       saveSearchTerm(searchTerm); // 검색어 저장
       setFilteredHistory([]); // 자동완성 목록 초기화
+      fetchMovies(query, page);
     }
   };
 
@@ -74,13 +75,6 @@ function Search() {
       setLoading(false);
     }
   };
-
-  // 검색어(query)가 변경되었을 때 영화 데이터 가져오기
-  useEffect(() => {
-    if (query) {
-      fetchMovies(query, page);
-    }
-  }, [query]);
 
   // 페이지가 변경되었을 때 추가 영화 데이터 가져오기
   useEffect(() => {
