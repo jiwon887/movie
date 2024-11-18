@@ -32,12 +32,11 @@ function Search() {
   // 검색 버튼 클릭 핸들러
   const handleSearchSubmit = () => {
     if (searchTerm.trim()) {
-      setQuery(searchTerm); // 검색어를 query로 설정
-      setPage(1); // 페이지 초기화
-      setMovies([]); // 영화 데이터 초기화
-      saveSearchTerm(searchTerm); // 검색어 저장
-      setFilteredHistory([]); // 자동완성 목록 초기화
-      fetchMovies(query, page);
+      setMovies([]); 
+      setPage(1); 
+      saveSearchTerm(searchTerm); 
+      setFilteredHistory([]); 
+      fetchMovies(searchTerm, 1); 
     }
   };
 
@@ -82,6 +81,8 @@ function Search() {
       fetchMovies(query, page);
     }
   }, [page]);
+
+  
 
   // 무한 스크롤
   useEffect(() => {
