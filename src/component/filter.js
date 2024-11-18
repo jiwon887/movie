@@ -106,11 +106,7 @@ const MovieList = () => {
             <option value={8}>8</option>
           </select>
         </label>
-<<<<<<< HEAD
-        <text>연도</text>
-=======
         <text>개봉 연도</text>
->>>>>>> develop
         <label>
           <input
             type="number"
