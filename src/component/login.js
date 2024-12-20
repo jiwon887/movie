@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+const REST_API_KET = process.env-dev.REST_API_KET;
+const REDIRECT_URL = 'http://localhost:3000/kakaologin';
 
 function Login({ setIsLoggedIn }) {
     let [loginID, setID] = useState("");
@@ -9,10 +11,16 @@ function Login({ setIsLoggedIn }) {
     let navigate = useNavigate();
     let localStorage = window.localStorage;
 
+
+
     const handleLogin = () => {
         const storedID = localStorage.getItem("savedID");
         const storedPassword = localStorage.getItem("savedPassword");
 
+        // 카카오 로그인 추가 부분
+        const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KET}&redirect_uri=${REDIRECT_URL}&response_type=code`
+        window.location.href = kakaoURL
+        
         if (loginID === storedID && loginPassword === storedPassword) {
             localStorage.setItem("isLogin", true);
             setIsLoggedIn(true);
