@@ -9,7 +9,7 @@ const MovieList = () => {
   const [minRating, setMinRating] = useState(0); 
   const [releaseYear, setReleaseYear] = useState(null);
 
-  const apiKey = window.localStorage.getItem("savedPassword");
+  const apiKey = process.env.REACT_APP_TMDB_API_KEY;
 
   const fetchGenres = async () => {
     try {

@@ -6,11 +6,12 @@ function MovieList() {
   const [animation, setAnimation] = useState([]); // animation 저장할 상태
   const [genres, setGenres] = useState([]); // 장르 전역 변수로 사용
   const [wishList, setWishList] = useState([]); // 위시리스트 반영
-  const apiKey = window.localStorage.getItem("savedPassword");
+  const apiKey = process.env.REACT_APP_TMDB_API_KEY;
   const userID = window.localStorage.getItem("savedID");
 
     // 인기영화, tv프로그램, 최신영화, 애니매이션
     useEffect(() => {
+      console.log(apiKey);
         const fetchMovies = async () => {
       try {
         // 장르 정보 가져오기

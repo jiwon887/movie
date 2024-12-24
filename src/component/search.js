@@ -10,7 +10,7 @@ function Search() {
   const observerRef = useRef(null); // IntersectionObserver 참조
   const [searchHistory, setSearchHistory] = useState([]); // 검색 기록
   const [filteredHistory, setFilteredHistory] = useState([]); // 필터링된 검색 기록
-  const apiKey = window.localStorage.getItem("savedPassword"); // API 키 가져오기
+  const apiKey = process.env.REACT_APP_TMDB_API_KEY; // API 키 가져오기
   const userID = window.sessionStorage.getItem("curUserID"); // 사용자 ID 가져오기
 
   // 검색어 입력 핸들러

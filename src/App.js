@@ -51,7 +51,7 @@ function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
           <Route path='/filter' element={isLoggedIn? <Filter /> : <Navigate to="/login"/>} />
           <Route path='/login' element={isLoggedIn ? <Navigate to="/login" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path='/signup' element={isLoggedIn ? <Navigate to="/login" /> : <Signup />} />
-          <Route path='/kakaologin' element={<Redirect />}/>
+          <Route path='/kakaologin' element={<Navigate to = "/" />}/>
         </Routes>
       </CSSTransition>
     </TransitionGroup>

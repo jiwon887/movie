@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-const REST_API_KET = process.env-dev.REST_API_KET;
-const REDIRECT_URL = 'http://localhost:3000/kakaologin';
+import axios from "axios";
+
+const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 function Login({ setIsLoggedIn }) {
     let [loginID, setID] = useState("");
@@ -11,47 +14,50 @@ function Login({ setIsLoggedIn }) {
     let navigate = useNavigate();
     let localStorage = window.localStorage;
 
-
-
-    const handleLogin = () => {
-        const storedID = localStorage.getItem("savedID");
-        const storedPassword = localStorage.getItem("savedPassword");
-
-        // 카카오 로그인 추가 부분
-        const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KET}&redirect_uri=${REDIRECT_URL}&response_type=code`
-        window.location.href = kakaoURL
-        
-        if (loginID === storedID && loginPassword === storedPassword) {
-            localStorage.setItem("isLogin", true);
-            setIsLoggedIn(true);
-            sessionStorage.setItem("curUserID", loginID);
-
-            // RememberMe 상태에 따라 로그인 정보를 저장하거나 삭제
-            if (rememberMe) {
-                localStorage.setItem("rememberMe", true);
-                localStorage.setItem("rememberedID", loginID);
-                localStorage.setItem("rememberedPassword", loginPassword);
-            } else {
-                localStorage.removeItem("rememberMe");
-                localStorage.removeItem("rememberedID");
-                localStorage.removeItem("rememberedPassword");
-            }
-
-            navigate("/");
-        } else {
-            alert("Invalid ID or Password");
-        }
+    const handleKakaoLogin = () => {
+        window.location.href = kakaoURL; 
     };
 
     useEffect(() => {
-        // id, password 채워주기
-        const remembered = localStorage.getItem("rememberMe") === "true";
-        if (remembered) {
-            setRememberMe(true);
-            setID(localStorage.getItem("rememberedID") || "");
-            setPassword(localStorage.getItem("rememberedPassword") || "");
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get("code");
+
+        if (authCode) {
+            axios.post("https://kauth.kakao.com/oauth/token", null, {
+                params: {
+                    grant_type: "authorization_code",
+                    client_id: REST_API_KEY,
+                    redirect_uri: REDIRECT_URI,
+                    code: authCode,
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            })
+            .then((response) => {
+                const accessToken = response.data.access_token;
+
+                return axios.get("https://kapi.kakao.com/v2/user/me", {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+            })
+            .then((response) => {
+                const userData = response.data;
+                const { id, properties, kakao_account } = userData;
+
+                localStorage.setItem("isLogin", true);
+                localStorage.setItem("curUserID", id); 
+                setIsLoggedIn(true);
+
+                navigate("/");
+            })
+            .catch((error) => {
+                console.error("Kakao login failed:", error);
+            });
         }
-    }, []);
+    }, [navigate, setIsLoggedIn]);
 
     return (
         <div className="login-wrap">
@@ -73,50 +79,20 @@ function Login({ setIsLoggedIn }) {
                     <Link to="/signup" className="notab">회원가입</Link>
                 </div>
                 <div className="login-form">
+                    
                     <div className="group">
-                    <label htmlFor="email" className="label">이메일</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            className="input"
-                            size={20} 
-                            value={loginID} 
-                            onChange={(e) => setID(e.target.value)} 
-                            required
-                        />
-                    </div>
-                    <div className="group">
-                        <label htmlFor="password" className="label">비밀번호</label>
-                            <input
-                            type="password"
-                            id="password"
-                            className="input"
-                            size={30}
-                            value={loginPassword}
-                            onChange={(e)=>setPassword(e.target.value)}
-                            />
-                    </div>
-                    <label className="check-label">
-                        <input
-                            type="checkbox"
-                            checked={rememberMe}
-                            onChange={()=>setRememberMe(!rememberMe)}
-                            class="check"
-                        />
-                        <span class="icon">로그인 저장</span>
-                    </label>
-                    <div className="group">
-                    <button
+                        <button
                             type="button"
                             className="button"
-                            onClick={handleLogin}
+                            onClick={handleKakaoLogin}
                         >
-                            로그인
+                            카카오 로그인
                         </button>
                     </div>
                 </div>
             </div>
-        /</div>
-);
+        </div>
+    );
 }
+
 export default Login;

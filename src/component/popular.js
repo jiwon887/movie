@@ -11,7 +11,7 @@ function Popular() {
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [wishlist, setWishlist] = useState([]); // 위시리스트 반영
   const observerRef = useRef(null);
-  const apiKey = window.localStorage.getItem("savedPassword");
+  const apiKey = process.env.REACT_APP_TMDB_API_KEY;
   const userID = window.localStorage.getItem("savedID");
 
   // 영화 데이터 가져오기
