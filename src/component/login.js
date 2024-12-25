@@ -6,10 +6,7 @@ const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-function Login({ setIsLoggedIn }) {
-    let [loginID, setID] = useState("");
-    let [loginPassword, setPassword] = useState("");
-    let [rememberMe, setRememberMe] = useState(false);
+function Login({ setIsLoggedIn, setNickname }) {
 
     let navigate = useNavigate();
     let localStorage = window.localStorage;
@@ -46,10 +43,14 @@ function Login({ setIsLoggedIn }) {
             .then((response) => {
                 const userData = response.data;
                 const { id, properties, kakao_account } = userData;
-
+                const nickname = properties?.nickname || "사용자";
+                console.log(id, properties, kakao_account, nickname);
+                localStorage.setItem("nickname", nickname);
                 localStorage.setItem("isLogin", true);
                 localStorage.setItem("curUserID", id); 
+                setNickname(nickname);
                 setIsLoggedIn(true);
+
 
                 navigate("/");
             })
@@ -57,7 +58,7 @@ function Login({ setIsLoggedIn }) {
                 console.error("Kakao login failed:", error);
             });
         }
-    }, [navigate, setIsLoggedIn]);
+    }, [navigate, setIsLoggedIn, setNickname]);
 
     return (
         <div className="login-wrap">

@@ -11,7 +11,6 @@ function MovieList() {
 
     // 인기영화, tv프로그램, 최신영화, 애니매이션
     useEffect(() => {
-      console.log(apiKey);
         const fetchMovies = async () => {
       try {
         // 장르 정보 가져오기

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Nav from 'react-bootstrap/Nav';
@@ -23,11 +23,10 @@ const pageOrder = {
   '/signup': 7          // signup
 };
 
-function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
+function AnimatedRoutes({ isLoggedIn, setIsLoggedIn, setNickname }) {
   const location = useLocation();
   const [prevPath, setPrevPath] = useState(location.pathname);
 
-  // 이전 페이지와 현재 페이지 비교해 방향 결정
   const currentOrder = pageOrder[location.pathname] || 0;
   const prevOrder = pageOrder[prevPath] || 0;
   const transitionClass = currentOrder > prevOrder ? 'slide-left' : 'slide-right';
@@ -36,7 +35,7 @@ function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
     setPrevPath(location.pathname);
   }, [location.pathname]);
 
- return (
+  return (
     <TransitionGroup className="page">
       <CSSTransition
         key={location.key}
@@ -49,9 +48,9 @@ function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
           <Route path='/popular' element={isLoggedIn ? <Popular /> : <Navigate to="/login" />} />
           <Route path='/search' element={isLoggedIn ? <Search /> : <Navigate to="/login" />} />
           <Route path='/filter' element={isLoggedIn? <Filter /> : <Navigate to="/login"/>} />
-          <Route path='/login' element={isLoggedIn ? <Navigate to="/login" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path='/signup' element={isLoggedIn ? <Navigate to="/login" /> : <Signup />} />
-          <Route path='/kakaologin' element={<Navigate to = "/" />}/>
+          <Route path='/login' element={isLoggedIn ? <Navigate to="/" /> : <Login setIsLoggedIn={setIsLoggedIn} setNickname={setNickname} />} />
+          <Route path='/signup' element={isLoggedIn ? <Navigate to="/" /> : <Signup />} />
+          <Route path='/kakaologin' element={<Navigate to="/" />} />
         </Routes>
       </CSSTransition>
     </TransitionGroup>
@@ -59,23 +58,24 @@ function AnimatedRoutes({ isLoggedIn, setIsLoggedIn }) {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLogin") === "true");
+  const [nickname, setNickname] = useState(localStorage.getItem("nickname") || "");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const checkLoginStatus = () => {
-    const isLogin = localStorage.getItem("isLogin") === "true";
-    setIsLoggedIn(isLogin);
-    setIsLoading(false);
-  };
+  useLayoutEffect (() => {
+    const savedNickname = localStorage.getItem("nickname");
+    if (savedNickname) {
+      setNickname(savedNickname);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isLogin");
+    localStorage.removeItem("nickname");
+    localStorage.removeItem("curUserID");
     setIsLoggedIn(false);
+    setNickname("");
   };
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
 
   if (isLoading) {
     return <div className='loading-overlay'>Loading...</div>;
@@ -87,6 +87,7 @@ function App() {
         <Nav className='navbar' activeKey="/">
           <Link to="/" className="logo">
             <img src={homelog} alt="Nav logo" className='logo-img'/>
+            {nickname}
           </Link>
           <Nav.Item className='nav-item'>
             <Nav.Link as={Link} to="/">Home</Nav.Link>
@@ -109,7 +110,7 @@ function App() {
             </Nav.Item>
           )}
         </Nav>
-        <AnimatedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <AnimatedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} nickname={nickname} />
       </div>
     </Router>
   );
